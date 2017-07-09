@@ -1,0 +1,149 @@
+Instalacion:
+--------------
+
+sudo apt-get install postgresql postgresql-client postgresql-contrib libpq-dev
+
+
+apt-cache search postgres
+
+sudo apt-get install pgadmin3
+
+
+Cambiar contrasegna:
+----------------------
+
+sudo -u postgres psql postgres
+\password postgres
+
+
+
+Install Server Instrumentation (for PgAdmin) 
+--------------------------------------------
+sudo -u postgres psql < /usr/share/postgresql/8.4/contrib/adminpack.sql
+sudo -u postgres psql
+CREATE EXTENSION adminpack;
+
+
+
+Using pgAdmin III GUI
+----------------------
+Esta en el link https://help.ubuntu.com/community/PostgreSQL
+
+
+Crear BD:
+------------
+Desde la linea de comandos:
+sudo -u postgres createdb subastas.
+
+Nota: para salir de la linea de comandos de postgres ctrl +D
+
+Crear Tablas:
+------------------
+Entrar a la bd :
+	sudo -u postgres psql subastas
+
+scripts:
+
+CREATE TABLE estado
+(
+  estado_id serial NOT NULL,
+  estado_valor character(3),
+  estado_descripcion character varying(30),
+  CONSTRAINT estado_pkey PRIMARY KEY (estado_id)
+);
+
+CREATE TABLE categoria
+(
+  categoria_id serial NOT NULL,
+  categoria_nombre character varying(30),
+  CONSTRAINT categoria_pkey PRIMARY KEY (categoria_id)
+);
+
+CREATE TABLE imagen
+(
+  imagen_id serial NOT NULL,
+  imagen_url character varying(255),
+  imagen_descripcion character varying(255),
+  imagen_fechaagregacion  timestamp without time zone,
+  imagen_producto int,
+  CONSTRAINT imagen_pkey PRIMARY KEY (imagen_id)
+);
+
+CREATE TABLE moneda
+(
+  moneda_id serial NOT NULL,
+  moneda_nombre character varying(255),
+  moneda_simbolo char(3),
+  moneda_valorreal real,
+  moneda_valorvirtual real,
+  CONSTRAINT moneda_pkey PRIMARY KEY (moneda_id)
+);
+
+CREATE TABLE producto
+(
+  producto_id serial NOT NULL,
+  producto_nombre character varying(200),
+  producto_estado character(3),
+  producto_tiempoinicial timestamp without time zone,
+  producto_tiempofinal timestamp without time zone,
+  producto_precioreal real,
+  producto_preciovirtual real,
+  producto_descripcion character varying(255),
+  producto_categoria int,
+  producto_vendedor int,
+  producto_ganador int,
+  CONSTRAINT producto_pkey PRIMARY KEY (producto_id)
+);
+
+DROP  TABLE usuario;
+CREATE TABLE usuario
+(
+  usuario_id serial NOT NULL,
+  usuario_email character varying(60),
+  usuario_nombre character varying(255),
+  usuario_password character varying(50),
+  usuario_direccion character varying(255),
+  usuario_saldo real,
+  usuario_rol int,
+  CONSTRAINT usuario_pkey PRIMARY KEY (usuario_id)
+);
+
+CREATE TABLE usuario_moneda
+(
+  um_usuario_id int NOT NULL,
+  um_moneda_id int NOT NULL
+);
+
+CREATE TABLE usuario_rol
+(
+  ur_usuario_id int NOT NULL,
+  ur_rol_id int NOT NULL
+);
+
+CREATE TABLE rol
+(
+  rol_id serial NOT NULL,
+  rol_nombre character varying(60),
+  CONSTRAINT rol_pkey PRIMARY KEY (rol_id)
+);
+
+CREATE TABLE acceso
+(
+  acceso_id serial NOT NULL,
+  acceso_nombre character varying(60),
+  CONSTRAINT acceso_pkey PRIMARY KEY (acceso_id)
+);
+
+CREATE TABLE nivel_acceso
+(
+  nivelacceso_id serial NOT NULL,
+  nivelacceso_nombre character varying(60),
+  CONSTRAINT nivelacceso_pkey PRIMARY KEY (nivelacceso_id)
+);
+
+CREATE TABLE acceso_nivel_rol
+(
+  anr_cceso_id int NOT NULL,
+  anr_rol_id int NOT NULL,
+  anr_nivelacceso_id int NOT NULL
+);

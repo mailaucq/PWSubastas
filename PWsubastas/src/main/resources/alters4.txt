@@ -1,0 +1,33 @@
+DROP TABLE imagen;
+DROP TABLE producto;
+CREATE TABLE imagen
+(
+  imagen_id serial NOT NULL,
+  imagen_url character varying(255),
+  imagen_descripcion character varying(255),
+  imagen_fechaagregacion timestamp without time zone,
+  imagen_producto integer,
+  imagen bytea,
+  CONSTRAINT imagen_pkey PRIMARY KEY (imagen_id)
+)
+WITH (
+  OIDS=FALSE
+);
+CREATE TABLE producto
+(
+  producto_id serial NOT NULL,
+  producto_nombre character varying(200),
+  producto_estado character(3),
+  producto_tiempoinicial timestamp without time zone,
+  producto_tiempofinal timestamp without time zone,
+  producto_precioreal real,
+  producto_preciovirtual real,
+  producto_descripcion character varying(600),
+  producto_categoria integer,
+  producto_vendedor integer,
+  producto_ganador integer,
+  CONSTRAINT producto_pkey PRIMARY KEY (producto_id)
+)
+WITH (
+  OIDS=FALSE
+);

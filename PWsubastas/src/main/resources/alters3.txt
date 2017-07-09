@@ -1,0 +1,16 @@
+#DROP TABLE monitor
+CREATE TABLE monitor
+(
+	log_id serial NOT NULL,
+    class_name character varying(1000),
+  	method_name character varying(1000),
+  	execution_date timestamp without time zone,
+  	last_execution_time  character varying(50),
+	service_calls real,
+	avg_execution_time  character varying(50),
+	total_execution_time  character varying(50),
+	min_execution_time  character varying(50),
+	max_execution_time  character varying(50),
+	usuario_nombre character varying(255),
+  CONSTRAINT monitor_pkey PRIMARY KEY (log_id)
+);

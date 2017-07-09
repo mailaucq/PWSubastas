@@ -1,0 +1,40 @@
+ALTER TABLE moneda ADD COLUMN moneda_nombre character varying(150);
+ALTER TABLE moneda ADD COLUMN moneda_simbolo char(15);
+
+ALTER TABLE usuario ADD COLUMN usuario_email character varying(200);
+ALTER TABLE usuario ADD COLUMN usuario_rol int;
+
+ALTER TABLE producto ADD COLUMN producto_descripcion character varying(600);
+ALTER TABLE producto ADD COLUMN producto_categoria int;
+ALTER TABLE producto ADD COLUMN producto_vendedor int;
+ALTER TABLE producto ADD COLUMN producto_ganador int;
+
+CREATE TABLE categoria
+(
+  categoria_id serial NOT NULL,
+  categoria_nombre character varying(30),
+  CONSTRAINT categoria_pkey PRIMARY KEY (categoria_id)
+);
+
+CREATE TABLE imagen
+(
+  imagen_id serial NOT NULL,
+  imagen_url character varying(255),
+  imagen_descripcion character varying(255),
+  imagen_fechaagregacion  timestamp without time zone,
+  imagen_producto int,
+  CONSTRAINT imagen_pkey PRIMARY KEY (imagen_id)
+);
+
+CREATE TABLE usuario_rol
+(
+  ur_usuario_id int NOT NULL,
+  ur_rol_id int NOT NULL
+);
+
+CREATE TABLE rol
+(
+  rol_id serial NOT NULL,
+  rol_nombre character varying(60),
+  CONSTRAINT rol_pkey PRIMARY KEY (rol_id)
+);
